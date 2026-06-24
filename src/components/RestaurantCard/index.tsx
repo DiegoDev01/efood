@@ -4,7 +4,6 @@ import type { Restaurant } from '../../types'
 
 type CardProps = { restaurant: Restaurant }
 
-// Container principal do card com as bordas na cor primária
 const CardContainer = styled.div`
     background-color: ${(props) => props.theme.colors.white};
     border: 1px solid ${(props) => props.theme.colors.primary};
@@ -19,7 +18,6 @@ const RestaurantImage = styled.img`
     object-fit: cover;
     `
 
-// Bloco com as informações (Título, Nota, Descrição e Botão)
 const InfoContainer = styled.div`
     padding: 8px;
     display: flex;
@@ -74,7 +72,6 @@ const ButtonLink = styled(Link)`
     cursor: pointer;
     `
 
-// Container para as Tags que ficam absolutas em cima da imagem
 const TagsContainer = styled.div`
     position: absolute;
     top: 16px;
@@ -115,8 +112,6 @@ export const RestaurantCard = ({ restaurant }: CardProps) => {
                 <Description>
                     {restaurant.description}
                 </Description>
-
-                {/* Link apontando dinamicamente para o ID do restaurante mapeado no React Router */}
                 <ButtonLink to={`/perfil/${restaurant.id}`}>Saiba mais</ButtonLink>
             </InfoContainer>
         </CardContainer>

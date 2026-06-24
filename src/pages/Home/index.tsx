@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import bannerImg from '../../assets/hero.png'
 import logoImg from '../../assets/logo.png'
 import { RestaurantCard } from '../../components/RestaurantCard'
-import { Footer } from '../../components/Footer' // 1. IMPORTADO O FOOTER
+import { Footer } from '../../components/Footer' 
 import { restaurantsMock } from './data'
 
 const HeroBanner = styled.div`
@@ -72,8 +72,6 @@ export const Home = () => {
                     ))}
                 </RestaurantsGrid>
             </main>
-
-            {/* 3. INCLUÍDO O COMPONENTE NO FINAL DA PÁGINA */}
             <Footer />
         </>
     )

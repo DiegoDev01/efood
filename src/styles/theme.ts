@@ -1,9 +1,8 @@
-// src/styles/theme.ts
 export const theme = {
     colors: {
-        primary: '#E66767',       // Cor principal (botões, textos destacados)
-        secondary: '#FFEEDB',     // Cor de fundo dos cards / tags
-        background: '#FFF8F2',    // Cor de fundo da página
+        primary: '#E66767',       
+        secondary: '#FFEEDB',     
+        background: '#FFF8F2',    
         white: '#FFFFFF',
         textDark: '#E66767',
         textLight: '#FFEEDB'

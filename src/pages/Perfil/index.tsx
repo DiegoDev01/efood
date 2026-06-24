@@ -1,11 +1,10 @@
-// src/pages/Perfil/index.tsx
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 import logoImg from '../../assets/logo.png'
 import bannerImg from '../../assets/hero.png'
 import { DishCard } from '../../components/DishCard'
-import { Footer } from '../../components/Footer' // 1. IMPORTADO O FOOTER AQUI TAMBÉM
+import { Footer } from '../../components/Footer'
 
 const HeaderProfile = styled.header`
   width: 100%;
@@ -16,22 +15,39 @@ const HeaderProfile = styled.header`
   background-position: center;
   display: flex;
   align-items: center;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: auto;
+    padding: 24px 0;
+  }
 `
 
 const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   
   a, span {
     font-weight: 900;
     font-size: 18px;
     color: ${(props) => props.theme.colors.primary};
+    white-space: nowrap; /* Impede o texto do carrinho de quebrar todo torto */
   }
   
   img {
     width: 125px;
     height: auto;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    flex-direction: column; /* Empilha os elementos no celular */
+    gap: 16px;
+    text-align: center;
+    
+    a, span {
+      font-size: 16px; /* Ajusta levemente o tamanho da fonte */
+    }
   }
 `
 
@@ -45,6 +61,11 @@ const RestaurantBanner = styled.div`
   background-position: center;
   color: ${(props) => props.theme.colors.white};
   padding: 32px 0;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    height: 200px; /* Reduz a altura do banner no celular */
+    padding: 24px 16px;
+  }
 `
 
 const BannerContainer = styled.div`
@@ -62,6 +83,15 @@ const BannerContainer = styled.div`
   h2 {
     font-weight: 900;
     font-size: 32px;
+  }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    span {
+      font-size: 24px;
+    }
+    h2 {
+      font-size: 24px; /* Evita que nomes grandes de restaurantes quebrem o layout */
+    }
   }
 `
 
@@ -83,40 +113,39 @@ const MenuGrid = styled.div`
 `
 
 export const Perfil = () => {
-    return (
-        <>
-            <HeaderProfile>
-                <div className="container" style={{ width: '100%' }}>
-                    <HeaderContainer>
-                        <Link to="/">Restaurantes</Link>
-                        <img src={logoImg} alt="efood" />
-                        <span>0 produto(s) no carrinho</span>
-                    </HeaderContainer>
-                </div>
-            </HeaderProfile>
+  return (
+    <>
+      <HeaderProfile>
+        <div className="container" style={{ width: '100%' }}>
+          <HeaderContainer>
+            <Link to="/">Restaurantes</Link>
+            <img src={logoImg} alt="efood" />
+            <span>0 produto(s) no carrinho</span>
+          </HeaderContainer>
+        </div>
+      </HeaderProfile>
 
-            <RestaurantBanner>
-                <div className="container" style={{ height: '100%' }}>
-                    <BannerContainer>
-                        <span>Italiana</span>
-                        <h2>La Dolce Vita Trattoria</h2>
-                    </BannerContainer>
-                </div>
-            </RestaurantBanner>
+      <RestaurantBanner>
+        <div className="container" style={{ height: '100%' }}>
+          <BannerContainer>
+            <span>Italiana</span>
+            <h2>La Dolce Vita Trattoria</h2>
+          </BannerContainer>
+        </div>
+      </RestaurantBanner>
 
-            <main className="container">
-                <MenuGrid>
-                    <DishCard />
-                    <DishCard />
-                    <DishCard />
-                    <DishCard />
-                    <DishCard />
-                    <DishCard />
-                </MenuGrid>
-            </main>
+      <main className="container">
+        <MenuGrid>
+          <DishCard />
+          <DishCard />
+          <DishCard />
+          <DishCard />
+          <DishCard />
+          <DishCard />
+        </MenuGrid>
+      </main>
 
-            {/* 2. ADICIONADO NO FINAL DO PERFIL */}
-            <Footer />
-        </>
-    )
+      <Footer />
+    </>
+  )
 }

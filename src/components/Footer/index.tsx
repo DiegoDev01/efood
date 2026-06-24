@@ -1,8 +1,6 @@
-// src/components/Footer/index.tsx
 import styled from 'styled-components'
 import logoImg from '../../assets/logo.png'
 
-// Importando os ícones das redes sociais
 import instagramIcon from '../../assets/instagram.png'
 import facebookIcon from '../../assets/facebook.png'
 import twitterIcon from '../../assets/twitter.png'
@@ -64,10 +62,7 @@ export const Footer = () => {
     <FooterContainer>
       <div className="container">
         <FooterContent>
-          {/* Logo */}
           <Logo src={logoImg} alt="efood" />
-
-          {/* Redes Sociais */}
           <SocialLinks>
             <a href="https://instagram.com" target="_blank" rel="noreferrer">
               <img src={instagramIcon} alt="Instagram" />
@@ -79,8 +74,6 @@ export const Footer = () => {
               <img src={twitterIcon} alt="Twitter" />
             </a>
           </SocialLinks>
-
-          {/* TEXTO ATUALIZADO EXATO DO FIGMA */}
           <Disclaimer>
             A efood é uma plataforma para divulgação de estabelecimentos, a responsabilidade pela entrega, qualidade dos produtos é toda do estabelecimento contratado.
           </Disclaimer>
