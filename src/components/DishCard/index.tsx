@@ -1,12 +1,17 @@
+// src/components/DishCard/index.tsx
 import styled from 'styled-components'
 import type { Dish } from '../../types'
 
 const CardContainer = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
-  padding: 8px;
+  padding: 12px;
   color: ${(props) => props.theme.colors.secondary};
   display: flex;
   flex-direction: column;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    padding: 10px;
+  }
 `
 
 const DishImage = styled.img`
@@ -14,6 +19,10 @@ const DishImage = styled.img`
   height: 167px;
   object-fit: cover;
   margin-bottom: 8px;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    height: 140px;
+  }
 `
 
 const Title = styled.h3`
@@ -21,8 +30,11 @@ const Title = styled.h3`
   font-size: 16px;
   line-height: 19px;
   margin-bottom: 8px;
-`
 
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: 15px;
+  }
+`
 const Description = styled.p`
   font-size: 14px;
   line-height: 22px;
@@ -36,7 +48,7 @@ const AddButton = styled.button`
   border: none;
   font-weight: 700;
   font-size: 14px;
-  padding: 4px 0;
+  padding: 10px 0;
   width: 100%;
   cursor: pointer;
   transition: opacity 0.2s;
@@ -46,22 +58,32 @@ const AddButton = styled.button`
   }
 `
 
-type DishCardProps = Dish & {
-  onAdd?: () => void
+// Tipagem corrigida: Recebe o objeto completo 'dish' da API e a função para abrir o Modal
+type DishCardProps = {
+  dish: Dish
+  onBuy: (dish: Dish) => void
 }
 
-export const DishCard = ({
-  image = 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80',
-  title = 'Pizza Margherita',
-  description = 'A clássica pizza italiana com molho de tomate artesanal, muçarela de búfala fresca, manjericão e um fio de azeite extra virgem.',
-  onAdd,
-}: DishCardProps) => {
-    return (
-        <CardContainer>
-            <DishImage src={image} alt={title} />
-            <Title>{title}</Title>
-            <Description>{description}</Description>
-            <AddButton type="button" onClick={onAdd}>{'Adicionar ao carrinho'}</AddButton>
-        </CardContainer>
-    )
+export const DishCard = ({ dish, onBuy }: DishCardProps) => {
+  // Encurta a descrição para não quebrar o tamanho fixo dos cards na grade
+  const getShortDescription = (text: string) => {
+    if (text.length > 130) {
+      return text.slice(0, 130) + '...'
+    }
+    return text
+  }
+
+  return (
+    <CardContainer>
+      {/* Dados mapeados em português direto do objeto da API */}
+      <DishImage src={dish.foto} alt={dish.nome} />
+      <Title>{dish.nome}</Title>
+      <Description>{getShortDescription(dish.descricao)}</Description>
+
+      {/* Ao clicar, dispara o modal enviando o prato selecionado */}
+      <AddButton type="button" onClick={() => onBuy(dish)}>
+        Comprar o produto
+      </AddButton>
+    </CardContainer>
+  )
 }

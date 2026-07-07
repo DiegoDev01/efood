@@ -1,17 +1,19 @@
-export interface Restaurant {
+export interface Dish {
+    foto: string
+    preco: number
     id: number
-    title: string
-    rating: number
-    category: string
-    description: string
-    image: string
-    featured?: boolean
+    nome: string
+    descricao: string
+    porcao: string
 }
 
-export interface Dish {
-    id?: number
-    title?: string
-    description?: string
-    image?: string
-    price?: number | string
+export interface Restaurant {
+    id: number
+    titulo: string
+    destacado: boolean
+    tipo: string
+    avaliacao: number
+    descricao: string
+    capa: string
+    cardapio: Dish[]
 }

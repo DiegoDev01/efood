@@ -16,12 +16,22 @@ const FooterContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 24px;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    gap: 16px;
+  }
 `
 
 const Logo = styled.img`
   width: 125px;
   height: auto;
   margin-bottom: 32px;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 100px;
+    margin-bottom: 24px;
+  }
 `
 
 const SocialLinks = styled.div`
@@ -43,6 +53,15 @@ const SocialLinks = styled.div`
     width: 24px;
     height: 24px;
   }
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-bottom: 40px;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `
 
 const Disclaimer = styled.p`
@@ -55,6 +74,11 @@ const Disclaimer = styled.p`
   text-align: center;
   color: #E66767; /* Cor bege claro exata do Figma */
   opacity: 1;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    font-size: 9px;
+    padding: 0 8px;
+  }
 `
 
 export const Footer = () => {
