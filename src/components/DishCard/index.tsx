@@ -8,6 +8,8 @@ const CardContainer = styled.div`
   color: ${(props) => props.theme.colors.secondary};
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+  box-shadow: 0 8px 24px rgba(230, 103, 103, 0.14);
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     padding: 10px;
@@ -18,7 +20,7 @@ const DishImage = styled.img`
   width: 100%;
   height: 167px;
   object-fit: cover;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     height: 140px;
@@ -29,17 +31,19 @@ const Title = styled.h3`
   font-weight: 900;
   font-size: 16px;
   line-height: 19px;
-  margin-bottom: 8px;
+  margin: 0 0 8px;
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     font-size: 15px;
   }
 `
+
 const Description = styled.p`
   font-size: 14px;
   line-height: 22px;
-  margin-bottom: 8px;
-  flex-grow: 1; /* Garante que o botão fique sempre alinhado na parte de baixo */
+  margin: 0 0 12px;
+  flex-grow: 1;
+  color: ${(props) => props.theme.colors.secondary};
 `
 
 const AddButton = styled.button`
@@ -51,10 +55,11 @@ const AddButton = styled.button`
   padding: 10px 0;
   width: 100%;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 
   &:hover {
-    opacity: 0.9;
+    opacity: 0.95;
+    transform: translateY(-1px);
   }
 `
 

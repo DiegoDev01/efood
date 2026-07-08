@@ -11,7 +11,7 @@ type ModalProps = {
 const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.62);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,41 +20,41 @@ const Overlay = styled.div`
 `
 
 const Dialog = styled.div`
-  width: min(560px, 100%);
-  background-color: ${(props) => props.theme.colors.white};
-  border-radius: 30px;
-  padding: 32px;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.16);
+  width: min(920px, 100%);
+  background-color: ${(props) => props.theme.colors.primary};
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22);
   position: relative;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 22px;
+    padding: 20px;
     border-radius: 20px;
   }
 `
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 16px;
+  right: 16px;
   border: none;
-  background: ${(props) => props.theme.colors.secondary};
+  background: ${(props) => props.theme.colors.white};
   color: ${(props) => props.theme.colors.primary};
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  font-size: 20px;
+  font-size: 18px;
   cursor: pointer;
   display: grid;
   place-items: center;
 `
 
 const Heading = styled.h2`
-  font-size: 26px;
-  color: ${(props) => props.theme.colors.primary};
-  margin-bottom: 24px;
+  font-size: 24px;
+  color: ${(props) => props.theme.colors.white};
+  margin: 0 0 20px;
 `
 
 export const Modal = ({ open, title, children, onClose }: ModalProps) => {

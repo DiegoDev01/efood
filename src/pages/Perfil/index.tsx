@@ -31,6 +31,7 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 16px;
+  width: 100%;
   
   a, span {
     font-weight: 900;
@@ -75,7 +76,7 @@ const HeaderContainer = styled.div`
 const RestaurantBanner = styled.div<{ imageUrl: string }>`
   width: 100%;
   min-height: 320px;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%),
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.78) 100%),
     url(${(props) => props.imageUrl});
   background-repeat: no-repeat;
   background-size: cover;
@@ -98,14 +99,15 @@ const BannerContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  gap: 14px;
+  gap: 12px;
+  padding-top: 40px;
 
   span {
     font-weight: 700;
     font-size: 14px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    opacity: 0.9;
+    opacity: 0.95;
   }
 
   h2 {
@@ -113,19 +115,16 @@ const BannerContainer = styled.div`
     font-size: 42px;
     max-width: 620px;
     line-height: 1.05;
-  }
-
-  p {
-    max-width: 650px;
-    line-height: 1.6;
-    opacity: 0.9;
-    margin-bottom: 8px;
+    margin: 0;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    padding-top: 24px;
+
     span {
       font-size: 12px;
     }
+
     h2 {
       font-size: 30px;
     }
@@ -135,6 +134,7 @@ const BannerContainer = styled.div`
     span {
       font-size: 11px;
     }
+
     h2 {
       font-size: 24px;
     }
@@ -143,14 +143,14 @@ const BannerContainer = styled.div`
 
 const MenuGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: 32px;
   row-gap: 32px;
   margin-top: 80px;
   margin-bottom: 120px;
 
   @media (max-width: ${(props) => props.theme.breakpoints.desktop}) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
@@ -165,6 +165,73 @@ const MenuGrid = styled.div`
     row-gap: 20px;
     margin-top: 40px;
     margin-bottom: 56px;
+  }
+`
+
+const ModalContent = styled.div`
+  display: grid;
+  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+`
+
+const ModalImage = styled.img`
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+`
+
+const ModalInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: ${(props) => props.theme.colors.white};
+`
+
+const ModalTitle = styled.h3`
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.2;
+  color: ${(props) => props.theme.colors.white};
+`
+
+const ModalDescription = styled.p`
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.9);
+`
+
+const ModalMeta = styled.p`
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: ${(props) => props.theme.colors.secondary};
+`
+
+const AddCartButton = styled.button`
+  border: none;
+  border-radius: 12px;
+  padding: 14px 24px;
+  background-color: ${(props) => props.theme.colors.secondary};
+  color: ${(props) => props.theme.colors.primary};
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    opacity: 0.95;
   }
 `
 
@@ -246,7 +313,6 @@ export const Perfil = () => {
           <BannerContainer>
             <span>{restaurant.tipo}</span>
             <h2>{restaurant.titulo}</h2>
-            <p>{restaurant.descricao}</p>
           </BannerContainer>
         </div>
       </RestaurantBanner>
@@ -268,61 +334,24 @@ export const Perfil = () => {
           onClose={() => setSelectedDish(null)}
         >
           {selectedDish && (
-            <div>
-              <img
-                src={selectedDish.foto}
-                alt={selectedDish.nome}
-                style={{ width: '100%', borderRadius: '16px', marginBottom: '20px' }}
-              />
-              <p style={{ marginBottom: '12px' }}>{selectedDish.descricao}</p>
-              <p style={{ fontWeight: 700, marginBottom: '4px' }}>
-                Porção: {selectedDish.porcao}
-              </p>
-              <p style={{ fontWeight: 700, marginBottom: '20px' }}>
-                Preço: R$ {selectedDish.preco.toFixed(2).replace('.', ',')}
-              </p>
-              <form
-                onSubmit={(event) => {
-                  event.preventDefault()
-                  setSelectedDish(null)
-                  alert('Compra realizada com sucesso!')
-                }}
-              >
-                <label style={{ display: 'block', marginBottom: '12px' }}>
-                  Nome completo
-                  <input
-                    required
-                    type="text"
-                    style={{ width: '100%', marginTop: '8px', padding: '10px', borderRadius: '12px', border: '1px solid #EEE' }}
-                    placeholder="Seu nome"
-                  />
-                </label>
-                <label style={{ display: 'block', marginBottom: '12px' }}>
-                  Endereço de entrega
-                  <input
-                    required
-                    type="text"
-                    style={{ width: '100%', marginTop: '8px', padding: '10px', borderRadius: '12px', border: '1px solid #EEE' }}
-                    placeholder="Rua, número, bairro"
-                  />
-                </label>
-                <button
-                  type="submit"
-                  style={{
-                    width: '100%',
-                    padding: '14px 0',
-                    borderRadius: '14px',
-                    border: 'none',
-                    backgroundColor: '#E66767',
-                    color: '#FFFFFF',
-                    fontWeight: 700,
-                    cursor: 'pointer'
+            <ModalContent>
+              <ModalImage src={selectedDish.foto} alt={selectedDish.nome} />
+              <ModalInfo>
+                <ModalTitle>{selectedDish.nome}</ModalTitle>
+                <ModalDescription>{selectedDish.descricao}</ModalDescription>
+                <ModalMeta>Porção: {selectedDish.porcao}</ModalMeta>
+                <ModalMeta>Preço: R$ {selectedDish.preco.toFixed(2).replace('.', ',')}</ModalMeta>
+                <AddCartButton
+                  type="button"
+                  onClick={() => {
+                    setSelectedDish(null)
+                    alert('Produto adicionado ao carrinho!')
                   }}
                 >
-                  Confirmar compra
-                </button>
-              </form>
-            </div>
+                  Adicionar ao carrinho - R$ {selectedDish.preco.toFixed(2).replace('.', ',')}
+                </AddCartButton>
+              </ModalInfo>
+            </ModalContent>
           )}
         </Modal>
       </main>

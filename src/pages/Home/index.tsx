@@ -18,18 +18,18 @@ const HeroBanner = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 64px 0 40px 0;
+  padding: 64px 24px 40px;
   text-align: center;
   margin-bottom: 80px;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     min-height: auto;
-    padding: 48px 0 32px 0;
+    padding: 48px 24px 32px;
     margin-bottom: 56px;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 40px 0 24px 0;
+    padding: 40px 16px 24px;
     margin-bottom: 40px;
   }
 `
@@ -51,29 +51,30 @@ const Title = styled.h1`
   font-family: 'Roboto', sans-serif;
   font-weight: 900;
   font-size: 36px;
-  line-height: 100%;
+  line-height: 1.1;
   max-width: 539px;
-  width: 100%;
+  width: min(100%, 539px);
   color: ${(props) => props.theme.colors.primary};
   text-align: center;
+  margin: 0;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     font-size: 30px;
     max-width: 420px;
-    padding: 0 16px;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    font-size: 26px;
+    font-size: 24px;
     max-width: 320px;
   }
 `
 
 const RestaurantsGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   column-gap: 80px;
   row-gap: 48px;
+  align-items: start;
 
   @media (max-width: ${(props) => props.theme.breakpoints.desktop}) {
     column-gap: 48px;
