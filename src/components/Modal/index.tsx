@@ -24,7 +24,7 @@ const Dialog = styled.div`
   max-width: calc(100% - 48px);
   height: 344px; /* conforme Figma */
   background-color: ${(props) => props.theme.colors.primary};
-  border-radius: 12px;
+  border-radius: 0; /* sem arredondamento, conforme Figma */
   padding: 32px 36px 32px 36px; /* topo/padding interno para posicionamentos */
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
   position: relative;
@@ -74,7 +74,7 @@ export const ModalImageFixed = styled.img`
   width: 280px;
   height: 280px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 0; /* sem arredondamento */
   display: block;
   box-shadow: 0 6px 18px rgba(0,0,0,0.28);
 `
@@ -97,8 +97,8 @@ export const ModalParagraph = styled.p`
 `
 
 export const ModalPortion = styled(ModalParagraph)`
-  /* 'Porção' uses same typography as product description */
-  font-weight: 700;
+  /* 'Porção' uses same typography as product description (sem negrito) */
+  font-weight: 400;
   color: rgba(255,255,255,0.95);
 `
 
@@ -111,7 +111,7 @@ export const ModalButton = styled.button`
   height: 24px;
   line-height: 22px;
   border: 1px solid rgba(0,0,0,0.06);
-  border-radius: 6px;
+  border-radius: 0; /* sem arredondamento */
   background: ${(props) => props.theme.colors.secondary};
   color: ${(props) => props.theme.colors.primary};
   font-weight: 700;
