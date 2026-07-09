@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import styled from 'styled-components'
+import xClose from '../../assets/x-close.svg'
 
 type ModalProps = {
     open: boolean
@@ -43,15 +44,19 @@ const CloseButton = styled.button`
   top: 12px;
   right: 12px;
   border: none;
-  background: ${(props) => props.theme.colors.white};
-  color: ${(props) => props.theme.colors.primary};
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  font-size: 16px;
+  background: transparent;
+  padding: 0;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
-  display: grid;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  img { display: block; width: 16px; height: 16px; }
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    top: 8px;
+    right: 8px;
+  }
 `
 
 export const Heading = styled.h2`
@@ -130,7 +135,7 @@ export const Modal = ({ open, title, children, onClose }: ModalProps) => {
     <Overlay onClick={onClose}>
       <Dialog onClick={(event) => event.stopPropagation()}>
         <CloseButton type="button" onClick={onClose} aria-label="Fechar modal">
-          ×
+          <img src={xClose} alt="Fechar" />
         </CloseButton>
         {title && <Heading>{title}</Heading>}
         {children}
