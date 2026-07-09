@@ -6,7 +6,7 @@ import logoImg from '../../assets/logo.png'
 import bannerImg from '../../assets/hero.png'
 import { DishCard } from '../../components/DishCard'
 import { Footer } from '../../components/Footer'
-import { Modal } from '../../components/Modal'
+import { Modal, ModalInner, ModalImageFixed, ModalTextArea, ModalParagraph, ModalPortion, ModalButton, Heading as ModalHeading } from '../../components/Modal'
 import { fetchRestaurantById } from '../../services/api'
 import type { Dish, Restaurant } from '../../types'
 
@@ -172,72 +172,7 @@ const MenuGrid = styled.div`
   }
 `
 
-const ModalContent = styled.div`
-  display: grid;
-  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-`
-
-const ModalImage = styled.img`
-  width: 100%;
-  height: 100%;
-  min-height: 240px;
-  object-fit: cover;
-  border-radius: 16px;
-  display: block;
-`
-
-const ModalInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  color: ${(props) => props.theme.colors.white};
-`
-
-const ModalTitle = styled.h3`
-  margin: 0;
-  font-size: 28px;
-  line-height: 1.2;
-  color: ${(props) => props.theme.colors.white};
-`
-
-const ModalDescription = styled.p`
-  margin: 0;
-  font-size: 15px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.9);
-`
-
-const ModalMeta = styled.p`
-  margin: 0;
-  font-size: 15px;
-  font-weight: 700;
-  color: ${(props) => props.theme.colors.secondary};
-`
-
-const AddCartButton = styled.button`
-  border: none;
-  border-radius: 12px;
-  padding: 14px 24px;
-  background-color: ${(props) => props.theme.colors.secondary};
-  color: ${(props) => props.theme.colors.primary};
-  font-weight: 700;
-  font-size: 15px;
-  cursor: pointer;
-  align-self: flex-start;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-
-  &:hover {
-    transform: translateY(-1px);
-    opacity: 0.95;
-  }
-`
 
 export const Perfil = () => {
   const { id } = useParams()
@@ -334,28 +269,21 @@ export const Perfil = () => {
 
         <Modal
           open={Boolean(selectedDish)}
-          title={selectedDish?.nome}
           onClose={() => setSelectedDish(null)}
         >
           {selectedDish && (
-            <ModalContent>
-              <ModalImage src={selectedDish.foto} alt={selectedDish.nome} />
-              <ModalInfo>
-                <ModalTitle>{selectedDish.nome}</ModalTitle>
-                <ModalDescription>{selectedDish.descricao}</ModalDescription>
-                <ModalMeta>Porção: {selectedDish.porcao}</ModalMeta>
-                <ModalMeta>Preço: R$ {selectedDish.preco.toFixed(2).replace('.', ',')}</ModalMeta>
-                <AddCartButton
-                  type="button"
-                  onClick={() => {
-                    setSelectedDish(null)
-                    alert('Produto adicionado ao carrinho!')
-                  }}
-                >
+            <ModalInner>
+              <ModalImageFixed src={selectedDish.foto} alt={selectedDish.nome} />
+              <ModalTextArea>
+                <ModalHeading>{selectedDish.nome}</ModalHeading>
+                <ModalParagraph>{selectedDish.descricao}</ModalParagraph>
+                <ModalPortion>Porção: {selectedDish.porcao}</ModalPortion>
+                <div style={{ flex: 1 }} />
+                <ModalButton onClick={() => { setSelectedDish(null); alert('Produto adicionado ao carrinho!') }}>
                   Adicionar ao carrinho - R$ {selectedDish.preco.toFixed(2).replace('.', ',')}
-                </AddCartButton>
-              </ModalInfo>
-            </ModalContent>
+                </ModalButton>
+              </ModalTextArea>
+            </ModalInner>
           )}
         </Modal>
       </main>
