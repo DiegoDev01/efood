@@ -101,25 +101,29 @@ const BannerContainer = styled.div`
   justify-content: flex-end;
   gap: 12px;
   padding-top: 40px;
+  padding-left: 36px; /* alinhamento conforme Figma */
 
   span {
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
     opacity: 0.95;
+    margin-bottom: 6px;
   }
 
   h2 {
     font-weight: 900;
-    font-size: 42px;
-    max-width: 620px;
+    font-size: 48px;
+    max-width: 720px;
     line-height: 1.05;
     margin: 0;
+    text-shadow: 0 6px 22px rgba(0,0,0,0.45);
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding-top: 24px;
+    padding-left: 24px;
 
     span {
       font-size: 12px;
@@ -136,7 +140,7 @@ const BannerContainer = styled.div`
     }
 
     h2 {
-      font-size: 24px;
+      font-size: 22px;
     }
   }
 `

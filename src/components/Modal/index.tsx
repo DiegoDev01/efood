@@ -20,18 +20,18 @@ const Overlay = styled.div`
 `
 
 const Dialog = styled.div`
-  width: min(920px, 100%);
+  width: min(1024px, 90%);
   background-color: ${(props) => props.theme.colors.primary};
-  border-radius: 24px;
-  padding: 28px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
   position: relative;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 20px;
-    border-radius: 20px;
+    padding: 16px;
+    border-radius: 12px;
   }
 `
 
