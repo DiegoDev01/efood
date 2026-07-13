@@ -75,72 +75,99 @@ const HeaderContainer = styled.div`
 
 const RestaurantBanner = styled.div<{ imageUrl: string }>`
   width: 100%;
-  min-height: 320px;
+  height: 280px;
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.78) 100%),
     url(${(props) => props.imageUrl});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   color: ${(props) => props.theme.colors.white};
-  padding: 40px 0;
+  padding: 0;
+  position: relative;
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    min-height: auto;
-    padding: 32px 16px;
+    height: 240px;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    padding: 28px 16px;
+    height: 220px;
   }
 `
 
 const BannerContainer = styled.div`
+  position: relative;
+  width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 12px;
-  padding-top: 40px;
-  padding-left: 36px; /* alinhamento conforme Figma */
+  min-height: 280px;
 
   span {
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    opacity: 0.95;
-    margin-bottom: 6px;
+    position: absolute;
+    top: 25px;
+    left: 0;
+    width: 101px;
+    height: 33.25px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    font-style: normal;
+    font-size: 32px;
+    line-height: 33.25px;
+    letter-spacing: 0;
+    margin: 0;
+    opacity: 1;
+    white-space: nowrap;
   }
 
   h2 {
+    position: absolute;
+    top: 215px;
+    left: 0;
+    width: 676px;
+    height: 33.25px;
+    font-family: 'Roboto', sans-serif;
     font-weight: 900;
-    font-size: 48px;
-    max-width: 720px;
-    line-height: 1.05;
+    font-style: normal;
+    font-size: 32px;
+    line-height: 33.25px;
+    letter-spacing: 0;
     margin: 0;
-    text-shadow: 0 6px 22px rgba(0,0,0,0.45);
+    text-shadow: none;
+    white-space: nowrap;
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
-    padding-top: 24px;
-    padding-left: 24px;
+    min-height: 240px;
 
     span {
-      font-size: 12px;
+      top: 24px;
+      left: 24px;
+      font-size: 24px;
+      width: auto;
     }
 
     h2 {
-      font-size: 30px;
+      top: 64px;
+      left: 24px;
+      width: min(92%, 560px);
+      font-size: 24px;
+      white-space: normal;
+      line-height: 1.1;
     }
   }
 
   @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    min-height: 220px;
+
     span {
-      font-size: 11px;
+      top: 20px;
+      left: 16px;
+      font-size: 18px;
     }
 
     h2 {
-      font-size: 22px;
+      top: 54px;
+      left: 16px;
+      width: min(92%, 320px);
+      font-size: 20px;
     }
   }
 `
@@ -248,7 +275,7 @@ export const Perfil = () => {
       </HeaderProfile>
 
       <RestaurantBanner imageUrl={restaurant.capa}>
-        <div className="container" style={{ height: '100%' }}>
+        <div className="container" style={{ height: '100%', position: 'relative' }}>
           <BannerContainer>
             <span>{restaurant.tipo}</span>
             <h2>{restaurant.titulo}</h2>
