@@ -13,6 +13,15 @@ const Sidebar = styled.aside`
   padding: 16px;
   box-shadow: -8px 0 24px rgba(0,0,0,0.12);
   z-index: 1200;
+  @media (max-width: 480px) {
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 60vh; /* ocupar parte da tela em mobile */
+    bottom: 0;
+    top: auto;
+    padding: 12px;
+  }
 `
 
 const Overlay = styled.div`
@@ -33,12 +42,22 @@ const Product = styled.div`
   border-radius: 0; /* sem arredondamento */
   margin-bottom: 12px;
   position: relative;
+  @media (max-width: 480px) {
+    width: 100%;
+    height: auto;
+    padding: 12px;
+    flex-direction: row;
+  }
 `
 
 const Thumb = styled.img`
   width: 80px;
   height: 80px;
   object-fit: cover;
+  @media (max-width: 480px) {
+    width: 64px;
+    height: 64px;
+  }
 `
 
 const ProductInfo = styled.div`
@@ -54,6 +73,9 @@ const ProductTitle = styled.div`
   font-size: 18px;
   text-align: left;
   color: #E66767; /* cor das fontes */
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
 `
 
 const ProductPrice = styled.div`
@@ -63,6 +85,10 @@ const ProductPrice = styled.div`
   line-height: 22px;
   color: #E66767; /* cor das fontes */
   margin-top: 6px;
+  @media (max-width: 480px) {
+    font-size: 14px;
+    margin-top: 4px;
+  }
 `
 
 const Trash = styled.button`
@@ -77,6 +103,10 @@ const Trash = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 480px) {
+    right: 8px;
+    bottom: 8px;
+  }
 `
 
 const TotalRow = styled.div`
@@ -91,11 +121,15 @@ const TotalRow = styled.div`
   padding: 0 0 8px 0;
   border-radius: 0;
   color: #FFEBD9; /* cor do texto conforme especificado */
+  @media (max-width: 480px) {
+    width: 100%;
+    margin-top: 24px;
+  }
 `
 
 const CheckoutButton = styled.button`
   width: 344px;
-  height: 24px;
+  height: 40px;
   margin-top: 12px;
   background: #FFEBD9; /* conforme especificado */
   border: none;
@@ -105,12 +139,17 @@ const CheckoutButton = styled.button`
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
   font-size: 14px;
-  line-height: 14px; /* 100% de 14px */
+  line-height: 20px;
   letter-spacing: 0;
   text-align: center;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 480px) {
+    width: 100%;
+    height: 48px;
+    font-size: 16px;
+  }
 `
 
 type Props = {
@@ -128,8 +167,8 @@ export const Cart: React.FC<Props> = ({ items, onRemove, open = true, onClose })
     <>
       <Overlay onClick={onClose} />
       <Sidebar>
-      <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
-        <div style={{width:344}}>
+      <div style={{display:'flex',flexDirection:'column',alignItems:'center', height: '100%'}}>
+        <div style={{width:344, maxWidth: '100%'}}>
           {items.map((it, idx) => (
             <Product key={idx}>
               <Thumb src={it.foto} alt={it.nome} />
