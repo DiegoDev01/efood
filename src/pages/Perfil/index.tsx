@@ -12,7 +12,7 @@ import { Cart } from '../../components/Cart'
 import { fetchRestaurantById } from '../../services/api'
 import type { Dish, Restaurant } from '../../types'
 import type { RootState, AppDispatch } from '../../store'
-import { addItem, removeItem } from '../../store/cartSlice'
+import { addItem, closeCart, openCart, removeItem } from '../../store/cartSlice'
 
 const HeaderProfile = styled.header`
   width: 100%;
@@ -211,8 +211,7 @@ export const Perfil = () => {
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null)
   const dispatch = useDispatch<AppDispatch>()
-  const cartItems = useSelector((s: RootState) => s.cart.items)
-  const [cartOpen, setCartOpen] = useState(false)
+  const { items: cartItems, isOpen: cartOpen } = useSelector((s: RootState) => s.cart)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -276,7 +275,7 @@ export const Perfil = () => {
           <HeaderContainer>
             <Link to="/">Restaurantes</Link>
             <img src={logoImg} alt="efood" />
-            <span role="button" onClick={() => setCartOpen(true)} style={{cursor: 'pointer'}}>{cartItems.length} produto(s) no carrinho</span>
+            <span role="button" onClick={() => dispatch(openCart())} style={{cursor: 'pointer'}}>{cartItems.length} produto(s) no carrinho</span>
           </HeaderContainer>
         </div>
       </HeaderProfile>
@@ -301,7 +300,7 @@ export const Perfil = () => {
           ))}
         </MenuGrid>
 
-        <Cart open={cartOpen} items={cartItems} onRemove={(id) => dispatch(removeItem(id))} onClose={() => setCartOpen(false)} />
+        <Cart open={cartOpen} items={cartItems} onRemove={(id) => dispatch(removeItem(id))} onClose={() => dispatch(closeCart())} />
 
         <Modal
           open={Boolean(selectedDish)}
