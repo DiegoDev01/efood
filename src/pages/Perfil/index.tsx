@@ -7,6 +7,7 @@ import bannerImg from '../../assets/hero.png'
 import { DishCard } from '../../components/DishCard'
 import { Footer } from '../../components/Footer'
 import { Modal, ModalInner, ModalImageFixed, ModalTextArea, ModalParagraph, ModalPortion, ModalButton, Heading as ModalHeading } from '../../components/Modal'
+import { Cart } from '../../components/Cart'
 import { fetchRestaurantById } from '../../services/api'
 import type { Dish, Restaurant } from '../../types'
 
@@ -206,6 +207,8 @@ export const Perfil = () => {
   const restaurantId = Number(id)
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null)
+  const [cartItems, setCartItems] = useState<Dish[]>([])
+  const [cartOpen, setCartOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -269,7 +272,7 @@ export const Perfil = () => {
           <HeaderContainer>
             <Link to="/">Restaurantes</Link>
             <img src={logoImg} alt="efood" />
-            <span>0 produto(s) no carrinho</span>
+            <span role="button" onClick={() => setCartOpen(true)} style={{cursor: 'pointer'}}>{cartItems.length} produto(s) no carrinho</span>
           </HeaderContainer>
         </div>
       </HeaderProfile>
@@ -294,6 +297,17 @@ export const Perfil = () => {
           ))}
         </MenuGrid>
 
+        <Cart open={cartOpen} items={cartItems} onRemove={(id) => {
+          // remove only the first occurrence of the item with this id
+          setCartItems((prev) => {
+            const index = prev.findIndex((p) => p.id === id)
+            if (index === -1) return prev
+            const copy = [...prev]
+            copy.splice(index, 1)
+            return copy
+          })
+        }} onClose={() => setCartOpen(false)} />
+
         <Modal
           open={Boolean(selectedDish)}
           onClose={() => setSelectedDish(null)}
@@ -306,7 +320,11 @@ export const Perfil = () => {
                 <ModalParagraph>{selectedDish.descricao}</ModalParagraph>
                 <ModalPortion>Porção: {selectedDish.porcao}</ModalPortion>
                 <div style={{ flex: 1 }} />
-                <ModalButton onClick={() => { setSelectedDish(null); alert('Produto adicionado ao carrinho!') }}>
+                <ModalButton onClick={() => {
+                  // add to cart
+                  setCartItems((prev) => [...prev, selectedDish])
+                  setSelectedDish(null)
+                }}>
                   Adicionar ao carrinho - R$ {selectedDish.preco.toFixed(2).replace('.', ',')}
                 </ModalButton>
               </ModalTextArea>
