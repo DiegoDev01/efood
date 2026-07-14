@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -10,6 +11,8 @@ import { Modal, ModalInner, ModalImageFixed, ModalTextArea, ModalParagraph, Moda
 import { Cart } from '../../components/Cart'
 import { fetchRestaurantById } from '../../services/api'
 import type { Dish, Restaurant } from '../../types'
+import type { RootState, AppDispatch } from '../../store'
+import { addItem, removeItem } from '../../store/cartSlice'
 
 const HeaderProfile = styled.header`
   width: 100%;
@@ -207,7 +210,8 @@ export const Perfil = () => {
   const restaurantId = Number(id)
   const [restaurant, setRestaurant] = useState<Restaurant | null>(null)
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null)
-  const [cartItems, setCartItems] = useState<Dish[]>([])
+  const dispatch = useDispatch<AppDispatch>()
+  const cartItems = useSelector((s: RootState) => s.cart.items)
   const [cartOpen, setCartOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -297,16 +301,7 @@ export const Perfil = () => {
           ))}
         </MenuGrid>
 
-        <Cart open={cartOpen} items={cartItems} onRemove={(id) => {
-          // remove only the first occurrence of the item with this id
-          setCartItems((prev) => {
-            const index = prev.findIndex((p) => p.id === id)
-            if (index === -1) return prev
-            const copy = [...prev]
-            copy.splice(index, 1)
-            return copy
-          })
-        }} onClose={() => setCartOpen(false)} />
+        <Cart open={cartOpen} items={cartItems} onRemove={(id) => dispatch(removeItem(id))} onClose={() => setCartOpen(false)} />
 
         <Modal
           open={Boolean(selectedDish)}
@@ -321,8 +316,8 @@ export const Perfil = () => {
                 <ModalPortion>Porção: {selectedDish.porcao}</ModalPortion>
                 <div style={{ flex: 1 }} />
                 <ModalButton onClick={() => {
-                  // add to cart
-                  setCartItems((prev) => [...prev, selectedDish])
+                  // add to cart via redux
+                  if (selectedDish) dispatch(addItem(selectedDish))
                   setSelectedDish(null)
                 }}>
                   Adicionar ao carrinho - R$ {selectedDish.preco.toFixed(2).replace('.', ',')}
