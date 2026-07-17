@@ -77,11 +77,11 @@ const HeaderContainer = styled.div`
   }
 `
 
-const RestaurantBanner = styled.div<{ imageUrl: string }>`
+const RestaurantBanner = styled.div<{ $imageUrl: string }>`
   width: 100%;
   height: 280px;
   background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.78) 100%),
-    url(${(props) => props.imageUrl});
+    url(${(props) => props.$imageUrl});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -280,7 +280,7 @@ export const Perfil = () => {
         </div>
       </HeaderProfile>
 
-      <RestaurantBanner imageUrl={restaurant.capa}>
+      <RestaurantBanner $imageUrl={restaurant.capa}>
         <div className="container" style={{ height: '100%', position: 'relative' }}>
           <BannerContainer>
             <span>{restaurant.tipo}</span>
@@ -300,8 +300,6 @@ export const Perfil = () => {
           ))}
         </MenuGrid>
 
-        <Cart open={cartOpen} items={cartItems} onRemove={(id) => dispatch(removeItem(id))} onClose={() => dispatch(closeCart())} />
-
         <Modal
           open={Boolean(selectedDish)}
           onClose={() => setSelectedDish(null)}
@@ -315,17 +313,18 @@ export const Perfil = () => {
                 <ModalPortion>Porção: {selectedDish.porcao}</ModalPortion>
                 <div style={{ flex: 1 }} />
                 <ModalButton onClick={() => {
-                  // add to cart via redux
                   if (selectedDish) dispatch(addItem(selectedDish))
                   setSelectedDish(null)
                 }}>
-                  Adicionar ao carrinho - R$ {selectedDish.preco.toFixed(2).replace('.', ',')}
+                  Adicionar ao carrinho - R$ {Number(selectedDish.preco ?? 0).toFixed(2).replace('.', ',')}
                 </ModalButton>
               </ModalTextArea>
             </ModalInner>
           )}
         </Modal>
       </main>
+
+      <Cart open={cartOpen} items={cartItems} onClose={() => dispatch(closeCart())} onRemove={(id) => dispatch(removeItem(id))} />
 
       <Footer />
     </>
