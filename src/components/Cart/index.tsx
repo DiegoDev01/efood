@@ -242,6 +242,27 @@ function onlyDigits(value: string): string {
   return value.replace(/\D/g, '')
 }
 
+function validateZipCode(value: string): boolean {
+  return onlyDigits(value).length === 8
+}
+
+function validateCardNumber(value: string): boolean {
+  return onlyDigits(value).length === 16
+}
+
+function validateCvv(value: string): boolean {
+  return onlyDigits(value).length === 3
+}
+
+function validateMonth(value: string): boolean {
+  const month = Number(onlyDigits(value))
+  return month >= 1 && month <= 12 && onlyDigits(value).length === 2
+}
+
+function validateYear(value: string): boolean {
+  return onlyDigits(value).length === 4
+}
+
 type Props = {
   items: Dish[]
   onRemove: (id: number) => void
@@ -294,8 +315,8 @@ export const Cart = ({ items, onRemove, open = true, onClose }: Props) => {
   const total = useMemo(() => items.reduce((sum, item) => sum + Number(item.preco ?? 0), 0), [items])
   const formattedTotal = formatPrice(total)
 
-  const isDeliveryValid = receiver.trim() && address.trim() && city.trim() && zipCode.trim() && number.trim()
-  const isPaymentValid = cardName.trim() && cardNumber.trim() && cardCode.trim() && cardMonth.trim() && cardYear.trim()
+  const isDeliveryValid = receiver.trim() && address.trim() && city.trim() && validateZipCode(zipCode) && number.trim()
+  const isPaymentValid = cardName.trim() && validateCardNumber(cardNumber) && validateCvv(cardCode) && validateMonth(cardMonth) && validateYear(cardYear)
 
   const handleConfirmPayment = async () => {
     if (!isPaymentValid || !isDeliveryValid) {
